@@ -38,7 +38,7 @@
             <p class="align-center" ng-style="neutralStyle">Neutral</p>
             <div class="sentiment-container">
                 <div class="sentiment-item-panels">
-                    <div class="sentiment-negative" ng-style="{'width': politicalNegativePercentage}">
+                    <div class="sentiment-negative" id="politicalLeft" ng-style="{'width': politicalNegativePercentage}">
                         <div class="sentiment-perc" ng-if="politicalMagnitude < 0">
                             <div class="sentiment-perc-text">{{politicalNegativePercentage}}</div>
                         </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="sentiment-item-neutral"></div>
                 <div class="sentiment-item-panels">
-                    <div class="sentiment-positive" ng-style="{'width': politicalPositivePercentage}">
+                    <div class="sentiment-positive" id="politicalRight" ng-style="{'width': politicalPositivePercentage}">
                         <div class="sentiment-perc" ng-if="politicalMagnitude > 0">
                             <div class="sentiment-perc-text">{{politicalPositivePercentage}}</div>
                         </div>
@@ -54,8 +54,8 @@
                 </div>
             </div>
             <div class="positive-negative-container">
-                <div>Negative</div>
-                <div>Positive</div>
+                <div>Left</div>
+                <div>Right</div>
             </div>
         </div>
     </div>

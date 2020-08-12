@@ -1,9 +1,17 @@
+body {
+    background-color: #485461;
+    background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+
 .outer-container {
   width: 420px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  color: white;
 }
 
 .align-center {
@@ -15,19 +23,20 @@
   align-items: center;
   height: 65px;
   margin: 2px 0px;
+  background-color: grey;
 }
 
 .sentiment-item-panels {
   width: 190px;
   height: 80%;
-  background-color: #fafafa;
+  background-color: grey;
   position: relative;
 }
 
 .sentiment-item-neutral {
   width: 2px;
   height: 100%;
-  background-color: grey;
+  background-color: black;
 }
 
 .sentiment-negative {
@@ -44,7 +53,7 @@
   left: 0;
   width: 0%;
   height: 100%;
-  background-color: #2EC4B6;
+  background-color: #03ff21;
   transition: all 0.3s ease-in-out;
 }
 
@@ -58,7 +67,7 @@
 }
 
 .sentiment-perc-text {
-  color: black;
+  color: white;
   font-weight: bold;
 }
 
@@ -67,4 +76,12 @@
   display:flex;
   justify-content:space-between;
   margin-bottom:20px;
+}
+
+#politicalLeft {
+    background-color: #2871CC;
+}
+
+#politicalRight {
+    background-color: #E71D36;
 }

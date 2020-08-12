@@ -112,18 +112,18 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
            $scope.positiveWidth = { 'width': percentage + "%" };
            $scope.positivePercentage = percentage + "%";
            console.log($scope.positivePercentage);
-           //$scope.$apply();
+           $scope.$apply();
        } else if ($scope.magnitude === "negative") {
            // Negative
            $scope.negativeWidth = { 'width': percentage + "%" };
            $scope.negativePercentage = percentage + "%";
-           //$scope.$apply();
+           $scope.$apply();
        } else {
            // Neutral
            $scope.positiveWidth = { 'width': "5px" };
            $scope.negativeWidth = { 'width': "5px" };
            $scope.neutralStyle = { 'font-weight': "bold" };
-           //$scope.$apply();
+           $scope.$apply();
        }
    }
 
