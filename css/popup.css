@@ -24,6 +24,7 @@ body {
   height: 65px;
   margin: 2px 0px;
   background-color: grey;
+  border-radius: 10px;
 }
 
 .sentiment-item-panels {
@@ -31,6 +32,7 @@ body {
   height: 80%;
   background-color: grey;
   position: relative;
+  border-radius: 10px;
 }
 
 .sentiment-item-neutral {
@@ -46,6 +48,8 @@ body {
   height: 100%;
   background-color: #E71D36;
   transition: all 0.3s ease-in-out;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .sentiment-positive {
@@ -55,6 +59,8 @@ body {
   height: 100%;
   background-color: #03ff21;
   transition: all 0.3s ease-in-out;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .sentiment-perc {
@@ -84,4 +90,10 @@ body {
 
 #politicalRight {
     background-color: #E71D36;
+}
+
+#titlePanel {
+    background-color: #544D4B;
+    border-radius: 10px;
+    width: 65%;
 }
