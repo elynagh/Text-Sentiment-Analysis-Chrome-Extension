@@ -8,6 +8,7 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
    $scope.score = "";
    $scope.magnitude = "";
    $scope.politicalScore = 0;
+   $scope.biasRating = 0.0;
 
    $scope.positiveWidth = {'width': 0 + "px"};
    //$scope.positivePercentage = "";
@@ -102,6 +103,31 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
                  updatePoliticalAnalyzer();
              })
              .catch(err => console.log(err))
+
+           // code for gender analysis
+           var myHeaders5 = new Headers();
+           myHeaders5.append("Content-Type", "application/json");
+
+           var raw5 = JSON.stringify({ "textToTest": selection[0] });
+
+           var requestOptions5 = {
+               method: 'POST',
+               headers: myHeaders5,
+               body: raw5,
+               redirect: 'follow'
+           };
+
+           fetch("https://jaiv43beaj.execute-api.us-west-2.amazonaws.com/test/getbias", requestOptions5)
+             .then(response => response.json())
+             .then(resText2 => {
+                 console.log("success in getting reponse from Gender Bias API");
+                 console.log("response: " + JSON.stringify(resText2) + " next part : " + resText2.genderScore);
+                 $scope.biasRating = parseFloat(resText2.genderScore);
+                 console.log($scope.biasRating);
+                 updateGenderScore();
+             })
+             .catch(error => console.log('error', error));
+
        }
    });
 
@@ -149,6 +175,34 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
            console.log("neither");
            $scope.politicalPositiveWidth = { 'width': "5px" };
            $scope.politicalNegativeWidth = { 'width': "5px" };
+           $scope.neutralStyle = { 'font-weight': "bold" };
+           $scope.$apply();
+       }
+   }
+
+   function updateGenderScore() {
+       let genderPercentage = Math.abs($scope.biasRating) * 100;
+       if ($scope.biasRating > 0) {
+           // Positive
+           console.log("male");
+           $scope.genderPositiveWidth = { 'width': genderPercentage + "%" };
+           $scope.genderPositivePercentage = genderPercentage + "%";
+           $scope.genderMag = "male";
+           console.log($scope.genderPositivePercentage);
+           $scope.$apply();
+       } else if ($scope.biasRating < 0) {
+           // Negative
+           console.log("negative1");
+           $scope.genderNegativeWidth = { 'width': genderPercentage + "%" };
+           $scope.genderNegativePercentage = Math.abs(genderPercentage) + "%";
+           $scope.genderMag = "female";
+           console.log($scope.genderNegativePercentage);
+           $scope.$apply();
+       } else {
+           // Neutral
+           console.log("neither");
+           $scope.genderPositiveWidth = { 'width': "5px" };
+           $scope.genderNegativeWidth = { 'width': "5px" };
            $scope.neutralStyle = { 'font-weight': "bold" };
            $scope.$apply();
        }
