@@ -57,6 +57,29 @@
                 <div>Left</div>
                 <div>Right</div>
             </div>
+            <div class="align-center"><h2>Gender Analysis</h2></div>
+            <p class="align-center" ng-style="neutralStyle">Neutral</p>
+            <div class="sentiment-container">
+                <div class="sentiment-item-panels">
+                    <div class="sentiment-negative" id="genderFemale" ng-style="{'width': genderNegativePercentage}">
+                        <div class="sentiment-perc" ng-if="magnitude === 'female'">
+                            <div class="sentiment-perc-text">{{genderNegativePercentage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sentiment-item-neutral"></div>
+                <div class="sentiment-item-panels">
+                    <div class="sentiment-positive" id="genderMale" ng-style="{'width': genderPositivePercentage}">
+                        <div class="sentiment-perc" ng-if="magnitude === 'male'">
+                            <div class="sentiment-perc-text">{{genderPositivePercentage}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="positive-negative-container">
+                <div>Female</div>
+                <div>Male</div>
+            </div>
         </div>
     </div>
 </body>
