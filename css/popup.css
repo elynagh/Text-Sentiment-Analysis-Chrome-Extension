@@ -4,7 +4,7 @@ body {
 }
 
 .outer-container {
-  width: 420px;
+  width: 500px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -90,6 +90,14 @@ body {
 
 #politicalRight {
     background-color: #E71D36;
+}
+
+#genderMale {
+    background-color: #E71D36;
+}
+
+#genderFemale {
+    background-color: #2871CC;
 }
 
 #titlePanel {
