@@ -3,6 +3,7 @@ var myApp = angular.module("my-app", []);
 myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope, $rootScope, $http) {
    console.log("Controller Initialized");
 
+   $scope.maxUses = true;
    $scope.selectedText = "";
    $scope.neutralStyle = {};
    $scope.score = "";
@@ -23,86 +24,29 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
        return newNumber;
    }
 
+   //function getEmailPromise() {
+    //return new Promise(function(resolve, reject) {
+    //    chrome.identity.getProfileUserInfo(function(userInfo) {
+    //        console.log(JSON.stringify(userInfo));
+    //        if (userInfo["email"] == "") {
+    //            console.log("fail");
+    //            resolve(true);
+    //        } else {
+    //            resolve(false);
+     //       }
+     //   });
+    //});
+   //}
+
+
    chrome.tabs.executeScript({
        code: "window.getSelection().toString();"
-   }, function (selection) {
+   }, async function (selection) {
+       //var maxUses = await getEmailPromise();
+       var maxUses = true;
+       console.log(maxUses);
        console.log("selectedText: " + selection[0]);
-       if (selection[0].length > 0) {
-
-           // Code for sentiment analysis
-           var myHeaders = new Headers();
-           myHeaders.append("Content-Type", "application/json");
-           myHeaders.append("Authorization", "***REMOVED***");
-
-           var raw = JSON.stringify({ "text": selection[0], "features": { "sentiment": {} } });
-
-           var requestOptions = {
-               method: 'POST',
-               headers: myHeaders,
-               body: raw,
-               redirect: 'follow'
-           };
-           fetch("https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/***REMOVED***/v1/analyze?version=2019-07-12", requestOptions)
-             .then(res => {
-                 try {
-                     if (res.ok) {
-                         return res.json()
-                     } else {
-                         throw new Error(res)
-                     }
-                 }
-                 catch (err) {
-                     console.log(err.message)
-                     return WHATEVER_YOU_WANT_TO_RETURN
-                 }
-             })
-             .then(resJson => {
-                 console.log("success in getting reponse from Sentiment Analysis API");
-                 console.log("response: " + JSON.stringify(resJson));
-                 $scope.score = resJson.sentiment.document.score;
-                 $scope.magnitude = resJson.sentiment.document.label;
-                 console.log($scope.score + $scope.magnitude);
-                 updateSentimentAnalyzer();
-             })
-             .catch(err => console.log(err))
-
-           // Code for political analysis
-           var myHeaders = new Headers();
-           myHeaders.append("Cookie", "***REMOVED***");
-
-           var formdata = new FormData();
-           formdata.append("API", "***REMOVED***");
-           formdata.append("Text", selection[0]);
-
-           var requestOptions = {
-               method: 'POST',
-               headers: myHeaders,
-               body: formdata,
-               redirect: 'follow'
-           };
-
-           fetch("https://api.thebipartisanpress.com/api/endpoints/beta/robert", requestOptions)
-             .then(res => {
-                 try {
-                     if (res.ok) {
-                         return res.text()
-                     } else {
-                         throw new Error(res)
-                     }
-                 }
-                 catch (err) {
-                     console.log(err.message)
-                     return WHATEVER_YOU_WANT_TO_RETURN
-                 }
-             })
-             .then(resText => {
-                 console.log("success in getting reponse from Political Analysis API");
-                 console.log("response: " + resText);
-                 $scope.politicalScore = Number(resText);
-                 console.log($scope.politicalScore);
-                 updatePoliticalAnalyzer();
-             })
-             .catch(err => console.log(err))
+       if (selection[0].length > 0 && maxUses == true) {
 
            // code for gender analysis
            var myHeaders5 = new Headers();
@@ -121,9 +65,16 @@ myApp.controller("PopupCtrl", ['$scope', '$http', '$rootScope', function ($scope
              .then(response => response.json())
              .then(resText2 => {
                  console.log("success in getting reponse from Gender Bias API");
-                 console.log("response: " + JSON.stringify(resText2) + " next part : " + resText2.genderScore);
+                 console.log("response: " + JSON.stringify(resText2) + " gender score : " + resText2.genderScore);
+                 console.log("sentiment score: " + resText2.sentimentScore + " " + resText2.sentimentLabel);
+                 console.log("poli score: " + resText2.poliScore);
                  $scope.biasRating = parseFloat(resText2.genderScore);
-                 console.log($scope.biasRating);
+                 $scope.score = resText2.sentimentScore;
+                 $scope.magnitude = resText2.sentimentLabel;
+                 $scope.politicalScore = Number(resText2.poliScore);
+                 //console.log($scope.biasRating);
+                 updateSentimentAnalyzer();
+                 updatePoliticalAnalyzer();
                  updateGenderScore();
              })
              .catch(error => console.log('error', error));
